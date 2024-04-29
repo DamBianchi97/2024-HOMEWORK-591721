@@ -39,9 +39,11 @@ public class Borsa {
 	
 	public int getPeso() {
 		int peso = 0;
-		for (int i= 0; i<this.numeroAttrezzi; i++)
-			peso += this.attrezzi[i].getPeso();
-
+		for (int i= 0; i<this.numeroAttrezzi; i++) {
+			if (this.attrezzi[i] != null) {
+				peso += this.attrezzi[i].getPeso();
+			}
+		}
 		return peso;
 	}
 	
@@ -54,14 +56,16 @@ public class Borsa {
 	}
 	
 	public Attrezzo removeAttrezzo(String nomeAttrezzo) {
+		Attrezzo a = null;
 		for (int i = 0;i<numeroAttrezzi;i++) {
-			Attrezzo a = this.attrezzi[i];
-			if (a.getNome().equals(nomeAttrezzo)) {
+			if (this.attrezzi[i].getNome().equals(nomeAttrezzo)) {
+				a = this.attrezzi[i];
 				this.attrezzi[i] = null;
+				this.numeroAttrezzi --;
 				return a;
 			}
 		}
-		return null;
+		return a;
 	}
 	public String toString() {
 		StringBuilder s = new StringBuilder();
