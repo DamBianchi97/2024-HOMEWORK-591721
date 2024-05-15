@@ -1,13 +1,15 @@
 package it.uniroma3.diadia;
 
 
-import java.util.Scanner;
 
-import it.uniroma3.diadia.ambienti.Stanza;
+
+
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandi;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
-import it.uniroma3.diadia.giocatore.Borsa;
+
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -38,12 +40,12 @@ public class DiaDia {
 	private IO io;
 	private FabbricaDiComandi factory;
 	
-	public DiaDia(IO io) {
+	public DiaDia(Labirinto lab, IO io) {
 		this.io = io;
-		this.partita = new Partita();
+		this.partita = new Partita(lab);
 		this.factory = new FabbricaDiComandiFisarmonica();
 	}
-
+	
 	public void gioca() {
 		String istruzione; 
 
@@ -77,7 +79,18 @@ public class DiaDia {
 	
 	public static void main(String[] argc) {
 		IO io = new IOConsole();
-		DiaDia gioco = new DiaDia(io);
+		Labirinto lab = new LabirintoBuilder()
+											.addStanzaIniziale("Atrio")
+											.addAttrezzo("osso", 1)
+											.addStanza("Aula N10")
+											.addAttrezzo("chiave", 2)
+											.addAdiacente("Atrio", "Aula N10", "sud")
+											.addStanzaBloccata("Corridoio uffici", "chiave", "est")
+											.addAdiacente("Aula N10", "Corridoio uffici", "est")
+											.addStanzaVincente("Ufficio Crescenzi")
+											.addAdiacente("Corridoio uffici", "Ufficio Crescenzi", "est")
+											.getLab();
+		DiaDia gioco = new DiaDia(lab,io);
 		gioco.gioca();
 	}
 }

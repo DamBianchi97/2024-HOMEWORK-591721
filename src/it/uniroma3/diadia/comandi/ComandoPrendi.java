@@ -6,7 +6,7 @@ import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.giocatore.Borsa;
 
 public class ComandoPrendi implements Comando {
-	String nomeAttrezzo;
+	private String nomeAttrezzo;
 	@Override
 	public void esegui(Partita partita) {
 
@@ -18,8 +18,8 @@ public class ComandoPrendi implements Comando {
 		Stanza stanzaCorrente = partita.getLab().getStanzaCorrente();
 		Borsa bag = partita.getPlayer().getBag();
 		if(stanzaCorrente.hasAttrezzo(nomeAttrezzo)) {
-     		 bag.addAttrezzo(stanzaCorrente.getAttrezzo(nomeAttrezzo));
-		     stanzaCorrente.removeAttrezzo(stanzaCorrente.getAttrezzo(nomeAttrezzo));
+     		 if(bag.addAttrezzo(stanzaCorrente.getAttrezzo(nomeAttrezzo)))  stanzaCorrente.removeAttrezzo(stanzaCorrente.getAttrezzo(nomeAttrezzo));
+     		 else io.mostraMessaggio("La tua borsa è troppo piena");
 		}
 		else io.mostraMessaggio("L'attrezzo non e' presente nella stanza");
 		return;

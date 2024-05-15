@@ -13,15 +13,16 @@ public class ComandoVai implements Comando{
 	@Override
 	public void esegui(Partita partita) {
 		IO io = new IOConsole();
-		if(this.direzione==null)
+		if(this.direzione==null) {
 			io.mostraMessaggio("Dove vuoi andare ?");
+			return;
+		}
 		Stanza prossimaStanza = null;
 		prossimaStanza = partita.getLab().getStanzaCorrente().getStanzaAdiacente(direzione);
 		if (prossimaStanza == null)
 			io.mostraMessaggio("Direzione inesistente");
 		else {
 			partita.getLab().setStanzaCorrente(prossimaStanza);
-			int cfu = partita.getPlayer().getCfu();
 			partita.getPlayer().setCfu();
 		}
 		io.mostraMessaggio(partita.getLab().getStanzaCorrente().getDescrizione());

@@ -18,8 +18,8 @@ public class Partita {
 	private Labirinto lab;
 	private Giocatore player;
 	
-	public Partita() {
-		lab = new Labirinto();
+	public Partita(Labirinto labirinto) {
+		this.lab = labirinto;
 		player = new Giocatore();
 		this.finita = false;
 	}
