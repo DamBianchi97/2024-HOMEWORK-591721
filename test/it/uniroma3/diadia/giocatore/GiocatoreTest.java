@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import it.uniroma3.diadia.giocatore.Giocatore;
 
 class GiocatoreTest {
 	Giocatore g1 = new Giocatore();

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 
@@ -12,7 +11,7 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
 public class StanzaTest {
 	Stanza st1 = new Stanza("stanza 1");
 	Stanza st2 = new Stanza("stanza 2");
-	Attrezzo spada = new Attrezzo("spada",30);
+	Attrezzo spada = new Attrezzo("spada",5);
 	@Test
 	public void testStanzaAdiacente() {
 		assertNull(st1.getStanzaAdiacente("sud"));

@@ -2,23 +2,37 @@ package it.uniroma3.diadia;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 
 class PartitaTest {
-	Partita game = new Partita();
-	Stanza st1 = new Stanza("stanza 1");
+	private Labirinto lab;
+	private Partita game;
+	
+	@BeforeEach
+	void setUp() {
+	lab = new LabirintoBuilder()
+										.addStanzaIniziale("stanza1")
+										.addStanza("stanza2")
+										.addAdiacente("stanza1", "stanza2", "sud")
+										.addStanzaVincente("stanza2")
+										.getLab();
+	game = new Partita(lab);
+	}
+	
 	@Test
 	public void testGetStanzaVincente() {
-		assertEquals("Biblioteca",game.getLab().getStanzaVincente().getNome());
+		assertEquals("stanza2",game.getLab().getStanzaVincente().getNome());
 	}
 	
 	@Test
 	public void testSetStanzaCorrente() {
-		game.getLab().setStanzaCorrente(st1);
-		assertEquals(st1,game.getLab().getStanzaCorrente());
+		assertEquals("stanza1",game.getLab().getStanzaCorrente().getNome());
 	}
+	
 	@Test
 	public void testVinta() {
 		assertFalse(game.vinta());
