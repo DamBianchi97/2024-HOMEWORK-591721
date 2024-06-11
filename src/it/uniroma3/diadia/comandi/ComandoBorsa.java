@@ -8,49 +8,33 @@ import java.util.SortedSet;
 import it.uniroma3.diadia.*;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
-public class ComandoBorsa implements Comando{
+public class ComandoBorsa extends AbstractComando{
 
-	private String metodoOrdinamento;
-
+	private static final String NOME = "borsa";
+	
 	@Override 
 	public void esegui(Partita partita) {
-		IO io = new IOConsole();
-		if (metodoOrdinamento != null && metodoOrdinamento.equals(new String("lista"))) {
+		if (this.getParametro() != null && this.getParametro().equals(new String("lista"))) {
 			List<Attrezzo> list = partita.getPlayer().getBag().getContenutoOrdinatoPerPeso();
-			io.mostraMessaggioSequenziale("{ ");
-			for (Attrezzo it : list) io.mostraMessaggioSequenziale(it.getNome()+" ");
-			io.mostraMessaggio("}");
+			this.getIo().mostraMessaggioSequenziale("{ ");
+			for (Attrezzo it : list) this.getIo().mostraMessaggioSequenziale(it.getNome()+" ");
+			this.getIo().mostraMessaggio("}");
 		}
-		else if (metodoOrdinamento != null && metodoOrdinamento.equals(new String("set"))) {
+		else if (this.getParametro() != null && this.getParametro().equals(new String("set"))) {
 			SortedSet<Attrezzo> it = partita.getPlayer().getBag().getContenutoOrdinatoPerNome();
-			io.mostraMessaggioSequenziale("[ ");
-			for (Attrezzo tmp : it) io.mostraMessaggioSequenziale(tmp.getNome()+" ");
-			io.mostraMessaggio("]");
+			this.getIo().mostraMessaggioSequenziale("[ ");
+			for (Attrezzo tmp : it) this.getIo().mostraMessaggioSequenziale(tmp.getNome()+" ");
+			this.getIo().mostraMessaggio("]");
 		}
-		else if (metodoOrdinamento != null && metodoOrdinamento.equals(new String("mappa"))) {
+		else if (this.getParametro() != null && this.getParametro().equals(new String("mappa"))) {
 			Map<Integer,Set<Attrezzo>> map = partita.getPlayer().getBag().getContenutoRaggruppatoPerPeso();
 			for (Integer k : map.keySet()) {
 				Set<Attrezzo> value = map.get(k);
 				// io.mostraMessaggioSequenziale("( "+ k);
-				io.mostraMessaggio("( "+ k + "{ " + value + " } ) ;");	
+				this.getIo().mostraMessaggio("( "+ k + "{ " + value + " } ) ;");	
 			}		
 		}
-		else io.mostraMessaggio(partita.getPlayer().getBag().toString());
+		else this.getIo().mostraMessaggio(partita.getPlayer().getBag().toString());
 	}
-
-	@Override
-	public void setParametro(String parametro) {
-		this.metodoOrdinamento = parametro;
-
-	}
-
-	@Override
-	public String getNome() {
-		return "borsa";
-	}
-
-	@Override
-	public String getParametro() {
-		return this.metodoOrdinamento;
-	}
+	
 }

@@ -7,17 +7,19 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import it.uniroma3.diadia.ConfiguratoreProperties;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.attrezzi.AttrezzoComparatorNome;
 import it.uniroma3.diadia.attrezzi.AttrezzoComparatorPeso;
 
 
 public class Borsa {
-	public final static int DEFAULT_PESO_MAX_BORSA = 10;
+	public final static int DEFAULT_PESO_MAX_BORSA = ConfiguratoreProperties.getPesoMax();
 	private LinkedList<Attrezzo> attrezzi;
 	private int pesoMax;
 

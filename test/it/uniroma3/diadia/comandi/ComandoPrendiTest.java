@@ -2,20 +2,21 @@ package it.uniroma3.diadia.comandi;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
+
 import org.junit.jupiter.api.Test;
 
+import it.uniroma3.diadia.FormatoFileNonValidoException;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
+
 
 class ComandoPrendiTest {
 
 	@Test
-	void test() {
-		Labirinto lab = new LabirintoBuilder()
-												.addStanzaIniziale("Atrio")
-												.addAttrezzo("osso", 2)
-												.getLab();
+	void test() throws FileNotFoundException, FormatoFileNonValidoException {
+		
+		Labirinto lab = Labirinto.newLab("labirinto1.txt").getLab();										
 		Partita test = new Partita(lab);
 		Comando prova = new ComandoPrendi();		
 		prova.setParametro("osso");

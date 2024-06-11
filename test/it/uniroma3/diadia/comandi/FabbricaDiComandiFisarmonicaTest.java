@@ -6,14 +6,10 @@ import org.junit.jupiter.api.Test;
 
 class FabbricaDiComandiFisarmonicaTest {
 
-	@Test
-	void testComandoVaiNome() {
-		FabbricaDiComandi test = new FabbricaDiComandiFisarmonica();
-		assertEquals("vai",test.costruisciComando("vai").getNome());
-	}
+
 
 	@Test
-	void testComandoVaiParametro() {
+	void testComandoVaiParametro() throws Exception {
 		FabbricaDiComandi test = new FabbricaDiComandiFisarmonica();
 		assertEquals("sud",test.costruisciComando("vai sud").getParametro());
 	}

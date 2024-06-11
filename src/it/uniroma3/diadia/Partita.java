@@ -57,6 +57,9 @@ public class Partita {
 		return finita || vinta() || (this.getPlayer().getCfu() == 0);
 	}
 
+	public boolean haiPerso() {
+		return this.getPlayer().getCfu()==0;
+	}
 	/**
 	 * Imposta la partita come finita
 	 *

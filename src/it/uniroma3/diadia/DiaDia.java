@@ -4,11 +4,14 @@ package it.uniroma3.diadia;
 
 
 
+import java.util.Scanner;
+
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
+
 import it.uniroma3.diadia.comandi.Comando;
-import it.uniroma3.diadia.comandi.FabbricaDiComandi;
-import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
+
+import it.uniroma3.diadia.comandi.FabbricaDiComandiRiflessiva;
+
 
 
 /**
@@ -38,15 +41,15 @@ public class DiaDia {
 
 	private Partita partita;
 	private IO io;
-	private FabbricaDiComandi factory;
+	private FabbricaDiComandiRiflessiva factory;
 	
 	public DiaDia(Labirinto lab, IO io) {
 		this.io = io;
 		this.partita = new Partita(lab);
-		this.factory = new FabbricaDiComandiFisarmonica();
+		this.factory = new FabbricaDiComandiRiflessiva(this.io);
 	}
 	
-	public void gioca() {
+	public void gioca() throws Exception {
 		String istruzione; 
 
 		io.mostraMessaggio(MESSAGGIO_BENVENUTO);		
@@ -60,12 +63,13 @@ public class DiaDia {
 	 * Processa una istruzione 
 	 *
 	 * @return true se l'istruzione e' eseguita e il gioco continua, false altrimenti
+	 * @throws Exception 
 	 */
-	private boolean processaIstruzione(String istruzione) {
+	private boolean processaIstruzione(String istruzione) throws Exception {
 		Comando comandoDaEseguire = factory.costruisciComando(istruzione);
 		comandoDaEseguire.esegui(partita);
 
-	    if (this.partita.getPlayer().getCfu()==0) {
+	    if (this.partita.haiPerso()) {
 	    	io.mostraMessaggio("Cfu : "+this.partita.getPlayer().getCfu()+". Hai perso!");
 			return true;
 	    }
@@ -73,24 +77,28 @@ public class DiaDia {
 			io.mostraMessaggio("Hai vinto!");
 			return true;
 		}
-		return false;
+		return this.partita.isFinita();
 	}   
 	
 	
-	public static void main(String[] argc) {
-		IO io = new IOConsole();
-		Labirinto lab = new LabirintoBuilder()
-											.addStanzaIniziale("Atrio")
-											.addAttrezzo("osso", 1)
-											.addStanza("Aula N10")
-											.addAttrezzo("chiave", 2)
-											.addAdiacente("Atrio", "Aula N10", "sud")
-											.addStanzaBloccata("Corridoio uffici", "chiave", "est")
-											.addAdiacente("Aula N10", "Corridoio uffici", "est")
-											.addStanzaVincente("Ufficio Crescenzi")
-											.addAdiacente("Corridoio uffici", "Ufficio Crescenzi", "est")
+	public static void main(String[] argc) throws Exception {
+		Scanner scanner = new Scanner(System.in);
+		IO io = new IOConsole(scanner);
+		Labirinto lab = Labirinto.newLab("labirinto1.txt")
+//											.addStanzaIniziale("Atrio")
+//											.addAttrezzo("osso", 1)
+//											.addPersonaggio(new Mago("Merlino", "Sono un abile Mago", new Attrezzo("bacchetta", 3)))
+//											.addStanza("Aula N10")
+//											.addAttrezzo("chiave", 2)
+//											.addAdiacente("Atrio", "Aula N10", "sud")
+//											.addStanzaBloccata("Corridoio uffici", "chiave", "est")
+//											.addAdiacente("Aula N10", "Atrio", "nord")
+//											.addAdiacente("Aula N10", "Corridoio uffici", "est")
+//											.addStanzaVincente("Ufficio Crescenzi")
+//											.addAdiacente("Corridoio uffici", "Ufficio Crescenzi", "est")
 											.getLab();
 		DiaDia gioco = new DiaDia(lab,io);
 		gioco.gioca();
+		scanner.close();
 	}
 }
