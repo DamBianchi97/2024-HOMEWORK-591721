@@ -1,0 +1,11 @@
+Stanze:biblioteca
+Bloccate:
+Buie:
+Magiche:
+Inizio:biblioteca
+Vincente:biblioteca
+Maghi:
+Cani:
+Streghe:
+Attrezzi:martello 10 biblioteca
+Uscite:
